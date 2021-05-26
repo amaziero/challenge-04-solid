@@ -1,0 +1,183 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Ignite Introdução ao SOLID",
+		"Description": "Introdução ao SOLID",
+		"version": "1.0.0",
+		"contact": {
+			"email": "alison_lens@hotmail.com",
+			"linkedin": "linkedin.com/in/alison-maziero"
+		}
+	},
+	"paths": {
+		"/users": {
+			"post": {
+				"tags": ["User"],
+				"summary": "Create a User",
+				"description": "Create a new User",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"propriedades": {
+									"name": {
+										"types": "string"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "John Doe",
+									"email": "johndoe@example.com"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"500": {
+						"error": "Email alreary taken"
+					}
+				}
+			},			
+			"get": {
+				"tag": ["List Users"],
+				"summary": "List all users",
+				"description": "List all users",
+				"parameters":[
+					{
+							"name":"user_id",
+							"in":"header",
+							"description":"User's Id",
+							"required":true,
+							"schema":{
+									"type":"string",
+									"format":"uuid"
+							}
+					}
+				],
+				"response": {
+					"200": {
+						"desciprition": "Sucess",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties":{
+											"name":{
+													"type":"string"
+											},
+											"email":{
+													"type":"string"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"404":{
+						"description":"User not found"
+					}
+				}
+			}
+		},
+		"/users/:user_id/admin": {
+			"patch": {
+				"tags": ["User turn Admin"],
+				"summary": "Turn normal user into admin",
+				"description": "Turn normal user into admin",
+				"parameters":[
+					{
+							"name":"user_id",
+							"in":"path",
+							"description":"User's Id",
+							"required":true,
+							"schema":{
+									"type":"string",
+									"format":"uuid"
+							}
+					}
+				],
+				"responses":{
+					"200":{
+							"description":"Sucess",
+							"content":{
+									"application/json":{
+											"schema":{
+													"type":"array",
+													"items":{
+															"types":"object",
+															"properties":{
+																	"name":{
+																			"type":"string"
+																	},
+																	"email":{
+																			"type":"string"
+																	}
+															}
+													}
+											}
+									}
+							}
+					},
+					"404":{
+							"description":"User not found"
+					}
+			}
+		},
+		"/users/:user_id": {
+			"post": {
+				"tags": ["Profile"],
+				"summary": "Show user's profile",
+				"description": "Show user's profile",
+				"parameters":[
+					{
+							"name":"user_id",
+							"in":"path",
+							"description":"User's Id",
+							"required":true,
+							"schema":{
+									"type":"string",
+									"format":"uuid"
+							}
+					}
+				],
+				"responses":{
+					"200":{
+							"description":"Sucess",
+							"content":{
+									"application/json":{
+											"schema":{
+													"type":"array",
+													"items":{
+															"types":"object",
+															"properties":{
+																	"name":{
+																			"type":"string"
+																	},
+																	"email":{
+																			"type":"string"
+																	}
+															}
+													}
+											}
+									}
+							}
+						}
+					},
+					"404":{
+							"description":"User not found"
+					}
+				}
+			}
+		}
+	}
+}
